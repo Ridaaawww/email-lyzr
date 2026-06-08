@@ -33,7 +33,7 @@ export function AppSidebar() {
             <Mail className="h-4 w-4" />
           </div>
           <div className="flex flex-col leading-tight group-data-[collapsible=icon]:hidden">
-            <span className="text-sm font-semibold">Loopwise</span>
+            <span className="text-sm font-semibold">Lyzr Email Marketing</span>
             <span className="text-[11px] text-muted-foreground">Growth Intelligence</span>
           </div>
         </div>

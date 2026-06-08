@@ -15,7 +15,7 @@ import { PageHeader } from "@/components/page-header";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/playbook")({
-  head: () => ({ meta: [{ title: "The Playbook — Loopwise" }] }),
+  head: () => ({ meta: [{ title: "The Playbook — Lyzr Email Marketing" }] }),
   component: Playbook,
 });
 

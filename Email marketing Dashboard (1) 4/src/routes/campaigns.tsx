@@ -8,7 +8,7 @@ import { KpiCard } from "@/components/kpi-card";
 import { useFilteredData } from "@/lib/filters-context";
 
 export const Route = createFileRoute("/campaigns")({
-  head: () => ({ meta: [{ title: "Campaign Analytics — Loopwise" }] }),
+  head: () => ({ meta: [{ title: "Campaign Analytics — Lyzr Email Marketing" }] }),
   component: Campaigns,
 });
 

@@ -13,7 +13,7 @@ import { useFilteredData } from "@/lib/filters-context";
 import { getCampaignSteps, getCampaignAssets } from "@/lib/instantly.functions";
 
 export const Route = createFileRoute("/engagement")({
-  head: () => ({ meta: [{ title: "Content Engagement — Loopwise" }] }),
+  head: () => ({ meta: [{ title: "Content Engagement — Lyzr Email Marketing" }] }),
   component: Engagement,
 });
 

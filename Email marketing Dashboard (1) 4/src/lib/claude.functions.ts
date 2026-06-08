@@ -242,7 +242,7 @@ export const fetchSkillContent = createServerFn({ method: "POST" })
   .inputValidator((d: z.infer<typeof FetchSkillInput>) => FetchSkillInput.parse(d))
   .handler(async ({ data }) => {
     const res = await fetch(data.rawUrl, {
-      headers: { Accept: "text/plain", "User-Agent": "Loopwise/1.0" },
+      headers: { Accept: "text/plain", "User-Agent": "Lyzr Email Marketing/1.0" },
     });
     if (!res.ok) throw new Error(`Failed to fetch skill (${res.status})`);
     const text = await res.text();

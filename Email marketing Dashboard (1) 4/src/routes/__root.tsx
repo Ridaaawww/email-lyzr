@@ -57,10 +57,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Email Marketing" },
+      { title: "Lyzr Email Marketing" },
       { name: "description", content: "Email marketing analytics, deliverability, and AI insights for growth teams." },
-      { property: "og:title", content: "Email Marketing" },
-      { name: "twitter:title", content: "Email Marketing" },
+      { property: "og:title", content: "Lyzr Email Marketing" },
+      { name: "twitter:title", content: "Lyzr Email Marketing" },
       { property: "og:description", content: "Email marketing analytics, deliverability, and AI insights for growth teams." },
       { name: "twitter:description", content: "Email marketing analytics, deliverability, and AI insights for growth teams." },
       { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/8644da83-6eb9-452e-8b89-32c21d90d1f8" },

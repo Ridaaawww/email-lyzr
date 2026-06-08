@@ -13,7 +13,7 @@ import { getOpportunityBreakdown, getMeetingBookedAttribution } from "@/lib/inst
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/deliverability")({
-  head: () => ({ meta: [{ title: "Deliverability Health — Loopwise" }] }),
+  head: () => ({ meta: [{ title: "Deliverability Health — Lyzr Email Marketing" }] }),
   component: Deliverability,
 });
 

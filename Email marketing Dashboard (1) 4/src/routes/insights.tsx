@@ -8,7 +8,7 @@ import { aiInsights } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/insights")({
-  head: () => ({ meta: [{ title: "AI Insights — Loopwise" }] }),
+  head: () => ({ meta: [{ title: "AI Insights — Lyzr Email Marketing" }] }),
   component: Insights,
 });
 

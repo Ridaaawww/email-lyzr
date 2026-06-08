@@ -10,7 +10,7 @@ import { Download } from "lucide-react";
 import { useFilteredData } from "@/lib/filters-context";
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: [{ title: "Overview — Loopwise" }] }),
+  head: () => ({ meta: [{ title: "Overview — Lyzr Email Marketing" }] }),
   component: Overview,
 });
 
