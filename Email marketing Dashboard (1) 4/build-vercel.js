@@ -17,9 +17,10 @@ const fnDir = join(out, "functions", "index.func");
 mkdirSync(fnDir, { recursive: true });
 
 // Adapter: Node.js IncomingMessage/ServerResponse ↔ Web API Request/Response
+// CJS format so require() calls in bundled dependencies work at runtime
+const serverPath = join(root, "dist", "server", "server.js").replace(/\\/g, "/");
 const adapterSrc = `
-import worker from "${join(root, "dist", "server", "server.js").replace(/\\/g, "/")}";
-import { Readable } from "node:stream";
+import worker from "${serverPath}";
 
 export default async function handler(req, res) {
   const protocol = req.headers["x-forwarded-proto"] || "https";
@@ -58,7 +59,7 @@ await build({
   entryPoints: [join(root, "_vercel_adapter.js")],
   bundle: true,
   outfile: join(fnDir, "index.js"),
-  format: "esm",
+  format: "cjs",
   platform: "node",
   target: "node20",
   external: ["node:*"],
