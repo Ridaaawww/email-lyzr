@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WriteRouteImport } from './routes/write'
 import { Route as PlaybookRouteImport } from './routes/playbook'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as EngagementRouteImport } from './routes/engagement'
 import { Route as DeliverabilityRouteImport } from './routes/deliverability'
@@ -25,6 +26,11 @@ const WriteRoute = WriteRouteImport.update({
 const PlaybookRoute = PlaybookRouteImport.update({
   id: '/playbook',
   path: '/playbook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InsightsRoute = InsightsRouteImport.update({
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/deliverability': typeof DeliverabilityRoute
   '/engagement': typeof EngagementRoute
   '/insights': typeof InsightsRoute
+  '/login': typeof LoginRoute
   '/playbook': typeof PlaybookRoute
   '/write': typeof WriteRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/deliverability': typeof DeliverabilityRoute
   '/engagement': typeof EngagementRoute
   '/insights': typeof InsightsRoute
+  '/login': typeof LoginRoute
   '/playbook': typeof PlaybookRoute
   '/write': typeof WriteRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/deliverability': typeof DeliverabilityRoute
   '/engagement': typeof EngagementRoute
   '/insights': typeof InsightsRoute
+  '/login': typeof LoginRoute
   '/playbook': typeof PlaybookRoute
   '/write': typeof WriteRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/deliverability'
     | '/engagement'
     | '/insights'
+    | '/login'
     | '/playbook'
     | '/write'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/deliverability'
     | '/engagement'
     | '/insights'
+    | '/login'
     | '/playbook'
     | '/write'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/deliverability'
     | '/engagement'
     | '/insights'
+    | '/login'
     | '/playbook'
     | '/write'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   DeliverabilityRoute: typeof DeliverabilityRoute
   EngagementRoute: typeof EngagementRoute
   InsightsRoute: typeof InsightsRoute
+  LoginRoute: typeof LoginRoute
   PlaybookRoute: typeof PlaybookRoute
   WriteRoute: typeof WriteRoute
 }
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/playbook'
       fullPath: '/playbook'
       preLoaderRoute: typeof PlaybookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/insights': {
@@ -181,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   DeliverabilityRoute: DeliverabilityRoute,
   EngagementRoute: EngagementRoute,
   InsightsRoute: InsightsRoute,
+  LoginRoute: LoginRoute,
   PlaybookRoute: PlaybookRoute,
   WriteRoute: WriteRoute,
 }

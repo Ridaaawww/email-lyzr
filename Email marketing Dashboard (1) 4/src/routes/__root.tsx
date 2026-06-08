@@ -6,6 +6,7 @@ import {
   HeadContent,
   Scripts,
   Link,
+  redirect,
 } from "@tanstack/react-router";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
@@ -13,8 +14,9 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { GlobalFilters } from "@/components/global-filters";
 import { FiltersProvider } from "@/lib/filters-context";
 import { Button } from "@/components/ui/button";
-import { Bell, Search } from "lucide-react";
+import { Bell, LogOut, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { getCurrentUser, type SessionUser } from "@/lib/auth";
 
 import appCss from "../styles.css?url";
 
@@ -52,7 +54,17 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient; user?: SessionUser }>()({
+  beforeLoad: async ({ location }) => {
+    if (location.pathname.startsWith("/login") || location.pathname.startsWith("/api/auth")) {
+      return {};
+    }
+    const user = await getCurrentUser();
+    if (!user) {
+      throw redirect({ to: "/login" });
+    }
+    return { user };
+  },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -89,7 +101,17 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
+  const { queryClient, user } = Route.useRouteContext();
+
+  if (!user) return <Outlet />;
+
+  const initials = user.name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
   return (
     <QueryClientProvider client={queryClient}>
       <FiltersProvider>
@@ -108,7 +130,25 @@ function RootComponent() {
                     <Bell className="h-4 w-4" />
                   </Button>
                   <ThemeToggle />
-                  <div className="ml-2 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">SC</div>
+                  <div className="ml-2 flex items-center gap-2">
+                    {user.picture ? (
+                      <img
+                        src={user.picture}
+                        alt={user.name}
+                        className="h-8 w-8 rounded-full object-cover"
+                        referrerPolicy="no-referrer"
+                      />
+                    ) : (
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
+                        {initials}
+                      </div>
+                    )}
+                    <a href="/api/auth/logout" title={`Sign out (${user.email})`}>
+                      <Button variant="ghost" size="icon" aria-label="Sign out">
+                        <LogOut className="h-4 w-4" />
+                      </Button>
+                    </a>
+                  </div>
                 </div>
               </header>
               <div className="sticky top-14 z-20 flex flex-wrap items-center gap-2 border-b bg-background/80 px-4 py-2 backdrop-blur">
