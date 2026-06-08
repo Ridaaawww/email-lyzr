@@ -12,32 +12,75 @@ rmSync(out, { recursive: true, force: true });
 mkdirSync(join(out, "static"), { recursive: true });
 cpSync(join(root, "dist", "client"), join(out, "static"), { recursive: true });
 
-// Bundle the server entry into a single edge-compatible file
+// Write a Node.js adapter that wraps the Cloudflare Worker interface
 const fnDir = join(out, "functions", "index.func");
 mkdirSync(fnDir, { recursive: true });
 
-console.log("Bundling server for edge runtime...");
+// Adapter: Node.js IncomingMessage/ServerResponse ↔ Web API Request/Response
+const adapterSrc = `
+import worker from "${join(root, "dist", "server", "server.js").replace(/\\/g, "/")}";
+import { Readable } from "node:stream";
+
+export default async function handler(req, res) {
+  const protocol = req.headers["x-forwarded-proto"] || "https";
+  const host = req.headers["x-forwarded-host"] || req.headers.host || "localhost";
+  const url = \`\${protocol}://\${host}\${req.url}\`;
+
+  let body = undefined;
+  if (req.method !== "GET" && req.method !== "HEAD") {
+    const chunks = [];
+    for await (const chunk of req) chunks.push(chunk);
+    if (chunks.length > 0) body = Buffer.concat(chunks);
+  }
+
+  const webRequest = new Request(url, {
+    method: req.method,
+    headers: req.headers,
+    body: body ?? null,
+  });
+
+  const webResponse = await worker.fetch(webRequest, {}, {});
+
+  res.statusCode = webResponse.status;
+  webResponse.headers.forEach((value, key) => {
+    res.setHeader(key, value);
+  });
+
+  const arrayBuffer = await webResponse.arrayBuffer();
+  res.end(Buffer.from(arrayBuffer));
+}
+`;
+
+writeFileSync(join(root, "_vercel_adapter.js"), adapterSrc);
+
+console.log("Bundling server for Node.js runtime...");
 await build({
-  entryPoints: [join(root, "dist", "server", "server.js")],
+  entryPoints: [join(root, "_vercel_adapter.js")],
   bundle: true,
   outfile: join(fnDir, "index.js"),
   format: "esm",
-  platform: "browser", // edge runtime — Web APIs, no Node.js built-ins
-  target: "es2022",
-  conditions: ["worker", "browser"],
-  // Mark things that truly can't run in edge runtime
-  external: ["node:*", "cloudflare:*"],
+  platform: "node",
+  target: "node20",
+  external: ["node:*"],
   minify: false,
-  alias: {
-    // Resolve server-side chunk imports
-  },
 });
+
+// Clean up temporary adapter
+rmSync(join(root, "_vercel_adapter.js"));
 console.log("Server bundle complete.");
 
-// Edge function manifest
+// Serverless function manifest (Node.js runtime)
 writeFileSync(
   join(fnDir, ".vc-config.json"),
-  JSON.stringify({ runtime: "edge", entrypoint: "index.js" }, null, 2)
+  JSON.stringify(
+    {
+      runtime: "nodejs20.x",
+      handler: "index.js",
+      launcherType: "Nodejs",
+    },
+    null,
+    2
+  )
 );
 
 // Vercel output config (v3)
