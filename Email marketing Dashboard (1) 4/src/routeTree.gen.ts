@@ -9,12 +9,24 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WriteRouteImport } from './routes/write'
+import { Route as PlaybookRouteImport } from './routes/playbook'
 import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as EngagementRouteImport } from './routes/engagement'
 import { Route as DeliverabilityRouteImport } from './routes/deliverability'
 import { Route as CampaignsRouteImport } from './routes/campaigns'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WriteRoute = WriteRouteImport.update({
+  id: '/write',
+  path: '/write',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlaybookRoute = PlaybookRouteImport.update({
+  id: '/playbook',
+  path: '/playbook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InsightsRoute = InsightsRouteImport.update({
   id: '/insights',
   path: '/insights',
@@ -47,6 +59,8 @@ export interface FileRoutesByFullPath {
   '/deliverability': typeof DeliverabilityRoute
   '/engagement': typeof EngagementRoute
   '/insights': typeof InsightsRoute
+  '/playbook': typeof PlaybookRoute
+  '/write': typeof WriteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +68,8 @@ export interface FileRoutesByTo {
   '/deliverability': typeof DeliverabilityRoute
   '/engagement': typeof EngagementRoute
   '/insights': typeof InsightsRoute
+  '/playbook': typeof PlaybookRoute
+  '/write': typeof WriteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,6 +78,8 @@ export interface FileRoutesById {
   '/deliverability': typeof DeliverabilityRoute
   '/engagement': typeof EngagementRoute
   '/insights': typeof InsightsRoute
+  '/playbook': typeof PlaybookRoute
+  '/write': typeof WriteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -71,8 +89,17 @@ export interface FileRouteTypes {
     | '/deliverability'
     | '/engagement'
     | '/insights'
+    | '/playbook'
+    | '/write'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/campaigns' | '/deliverability' | '/engagement' | '/insights'
+  to:
+    | '/'
+    | '/campaigns'
+    | '/deliverability'
+    | '/engagement'
+    | '/insights'
+    | '/playbook'
+    | '/write'
   id:
     | '__root__'
     | '/'
@@ -80,6 +107,8 @@ export interface FileRouteTypes {
     | '/deliverability'
     | '/engagement'
     | '/insights'
+    | '/playbook'
+    | '/write'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -88,10 +117,26 @@ export interface RootRouteChildren {
   DeliverabilityRoute: typeof DeliverabilityRoute
   EngagementRoute: typeof EngagementRoute
   InsightsRoute: typeof InsightsRoute
+  PlaybookRoute: typeof PlaybookRoute
+  WriteRoute: typeof WriteRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/write': {
+      id: '/write'
+      path: '/write'
+      fullPath: '/write'
+      preLoaderRoute: typeof WriteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/playbook': {
+      id: '/playbook'
+      path: '/playbook'
+      fullPath: '/playbook'
+      preLoaderRoute: typeof PlaybookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/insights': {
       id: '/insights'
       path: '/insights'
@@ -136,7 +181,19 @@ const rootRouteChildren: RootRouteChildren = {
   DeliverabilityRoute: DeliverabilityRoute,
   EngagementRoute: EngagementRoute,
   InsightsRoute: InsightsRoute,
+  PlaybookRoute: PlaybookRoute,
+  WriteRoute: WriteRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

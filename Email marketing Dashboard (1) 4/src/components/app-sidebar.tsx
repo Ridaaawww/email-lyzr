@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, BarChart3, ShieldCheck, Sparkles, Mail, MousePointerClick } from "lucide-react";
+import { LayoutDashboard, BarChart3, ShieldCheck, Sparkles, Mail, MousePointerClick, BookOpen, Wand2 } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -18,6 +18,8 @@ const items = [
   { title: "Deliverability", url: "/deliverability", icon: ShieldCheck },
   { title: "Engagement", url: "/engagement", icon: MousePointerClick },
   { title: "AI Insights", url: "/insights", icon: Sparkles },
+  { title: "The Playbook", url: "/playbook", icon: BookOpen },
+  { title: "Cheat Codes", url: "/write", icon: Wand2 },
 ];
 
 export function AppSidebar() {
