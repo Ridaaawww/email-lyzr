@@ -1,14 +1,10 @@
-import { createAPIFileRoute } from "@tanstack/react-start/api";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { clearSession } from "@/lib/auth";
 
-export const APIRoute = createAPIFileRoute("/api/auth/logout")({
-  GET: async ({ request }) => {
-    const origin = new URL(request.url).origin;
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: `${origin}/login`,
-        "Set-Cookie": "session=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0",
-      },
-    });
+export const Route = createFileRoute("/api/auth/logout")({
+  loader: async () => {
+    await clearSession();
+    throw redirect({ to: "/login" });
   },
+  component: () => null,
 });
