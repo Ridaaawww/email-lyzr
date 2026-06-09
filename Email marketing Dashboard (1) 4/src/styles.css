@@ -1,10 +1,14 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap");
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -49,87 +53,110 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* ─── Lyzr Light Theme ─────────────────────────────────────────────────── */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(0.99 0.002 247);
-  --foreground: oklch(0.18 0.02 260);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.02 260);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.02 260);
-  --primary: oklch(0.45 0.18 265);
-  --primary-foreground: oklch(0.99 0.003 247);
-  --secondary: oklch(0.97 0.005 247);
-  --secondary-foreground: oklch(0.22 0.03 260);
-  --muted: oklch(0.965 0.005 247);
-  --muted-foreground: oklch(0.5 0.02 257);
-  --accent: oklch(0.96 0.01 250);
-  --accent-foreground: oklch(0.22 0.03 260);
-  --destructive: oklch(0.6 0.22 25);
-  --destructive-foreground: oklch(0.99 0.003 247);
-  --success: oklch(0.62 0.16 155);
-  --success-foreground: oklch(0.99 0.003 247);
-  --warning: oklch(0.74 0.16 75);
-  --warning-foreground: oklch(0.2 0.03 260);
-  --info: oklch(0.62 0.16 235);
-  --info-foreground: oklch(0.99 0.003 247);
-  --border: oklch(0.92 0.008 255);
-  --input: oklch(0.92 0.008 255);
-  --ring: oklch(0.45 0.18 265);
-  --chart-1: oklch(0.55 0.2 265);
-  --chart-2: oklch(0.65 0.16 195);
-  --chart-3: oklch(0.62 0.16 155);
-  --chart-4: oklch(0.74 0.16 75);
-  --chart-5: oklch(0.6 0.22 25);
-  --sidebar: oklch(0.985 0.003 247);
-  --sidebar-foreground: oklch(0.22 0.02 260);
-  --sidebar-primary: oklch(0.45 0.18 265);
-  --sidebar-primary-foreground: oklch(0.99 0.003 247);
-  --sidebar-accent: oklch(0.95 0.01 250);
-  --sidebar-accent-foreground: oklch(0.22 0.03 260);
-  --sidebar-border: oklch(0.92 0.008 255);
-  --sidebar-ring: oklch(0.45 0.18 265);
+  --radius: 0.875rem; /* 14px — Lyzr brand card radius */
+
+  --background:             #EBE5DC; /* Warm Linen */
+  --foreground:             #2A1F1A; /* Ink Deep */
+
+  --card:                   #F2EDE8; /* Cream */
+  --card-foreground:        #2A1F1A;
+
+  --popover:                #F9F5F1; /* Parchment */
+  --popover-foreground:     #2A1F1A;
+
+  --primary:                #6B4C4C; /* Deep Mahogany */
+  --primary-foreground:     #F9F5F1;
+
+  --secondary:              #F2EDE8;
+  --secondary-foreground:   #2A1F1A;
+
+  --muted:                  #F9F5F1; /* Parchment */
+  --muted-foreground:       #7A6A60; /* Warm Muted */
+
+  --accent:                 #C96A5A; /* Dusty Rose */
+  --accent-foreground:      #F9F5F1;
+
+  --destructive:            #DC2626;
+  --destructive-foreground: #F9F5F1;
+  --success:                #16A34A;
+  --success-foreground:     #F9F5F1;
+  --warning:                #D97706;
+  --warning-foreground:     #2A1F1A;
+  --info:                   #3B82F6;
+  --info-foreground:        #F9F5F1;
+
+  --border:                 #D4CBC0; /* Warm Border */
+  --input:                  #D4CBC0;
+  --ring:                   #6B4C4C;
+
+  --chart-1:                #6B4C4C;
+  --chart-2:                #C96A5A;
+  --chart-3:                #8A6060;
+  --chart-4:                #D97706;
+  --chart-5:                #16A34A;
+
+  --sidebar:                    #EBE5DC;
+  --sidebar-foreground:         #2A1F1A;
+  --sidebar-primary:            #6B4C4C;
+  --sidebar-primary-foreground: #F9F5F1;
+  --sidebar-accent:             #D4CBC0;
+  --sidebar-accent-foreground:  #2A1F1A;
+  --sidebar-border:             #D4CBC0;
+  --sidebar-ring:               #6B4C4C;
 }
 
+/* ─── Lyzr Dark Theme ──────────────────────────────────────────────────── */
 .dark {
-  --background: oklch(0.14 0.015 260);
-  --foreground: oklch(0.97 0.005 247);
-  --card: oklch(0.18 0.018 260);
-  --card-foreground: oklch(0.97 0.005 247);
-  --popover: oklch(0.18 0.018 260);
-  --popover-foreground: oklch(0.97 0.005 247);
-  --primary: oklch(0.7 0.17 265);
-  --primary-foreground: oklch(0.15 0.02 260);
-  --secondary: oklch(0.24 0.02 260);
-  --secondary-foreground: oklch(0.97 0.005 247);
-  --muted: oklch(0.22 0.02 260);
-  --muted-foreground: oklch(0.65 0.02 257);
-  --accent: oklch(0.26 0.025 260);
-  --accent-foreground: oklch(0.97 0.005 247);
-  --destructive: oklch(0.65 0.2 25);
-  --destructive-foreground: oklch(0.97 0.005 247);
-  --success: oklch(0.68 0.16 155);
-  --success-foreground: oklch(0.14 0.015 260);
-  --warning: oklch(0.78 0.15 75);
-  --warning-foreground: oklch(0.14 0.015 260);
-  --info: oklch(0.68 0.15 235);
-  --info-foreground: oklch(0.14 0.015 260);
-  --border: oklch(0.27 0.02 260);
-  --input: oklch(0.27 0.02 260);
-  --ring: oklch(0.7 0.17 265);
-  --chart-1: oklch(0.7 0.17 265);
-  --chart-2: oklch(0.72 0.14 195);
-  --chart-3: oklch(0.7 0.15 155);
-  --chart-4: oklch(0.78 0.15 75);
-  --chart-5: oklch(0.7 0.18 25);
-  --sidebar: oklch(0.16 0.018 260);
-  --sidebar-foreground: oklch(0.92 0.005 247);
-  --sidebar-primary: oklch(0.7 0.17 265);
-  --sidebar-primary-foreground: oklch(0.14 0.015 260);
-  --sidebar-accent: oklch(0.24 0.02 260);
-  --sidebar-accent-foreground: oklch(0.97 0.005 247);
-  --sidebar-border: oklch(0.24 0.02 260);
-  --sidebar-ring: oklch(0.7 0.17 265);
+  --background:             #160F0B; /* Near Black */
+  --foreground:             #F2EDE8;
+
+  --card:                   #1E1610; /* Dark Espresso */
+  --card-foreground:        #F2EDE8;
+
+  --popover:                #1E1610;
+  --popover-foreground:     #F2EDE8;
+
+  --primary:                #C96A5A; /* Dusty Rose — CTA on dark */
+  --primary-foreground:     #160F0B;
+
+  --secondary:              #261A15;
+  --secondary-foreground:   #F2EDE8;
+
+  --muted:                  #261A15;
+  --muted-foreground:       #9B8A82;
+
+  --accent:                 #C96A5A;
+  --accent-foreground:      #160F0B;
+
+  --destructive:            #EF4444;
+  --destructive-foreground: #F9F5F1;
+  --success:                #22C55E;
+  --success-foreground:     #160F0B;
+  --warning:                #F59E0B;
+  --warning-foreground:     #160F0B;
+  --info:                   #60A5FA;
+  --info-foreground:        #160F0B;
+
+  --border:                 rgba(255, 255, 255, 0.07);
+  --input:                  rgba(255, 255, 255, 0.07);
+  --ring:                   #C96A5A;
+
+  --chart-1:                #C96A5A;
+  --chart-2:                #8A6060;
+  --chart-3:                #6B4C4C;
+  --chart-4:                #F59E0B;
+  --chart-5:                #22C55E;
+
+  --sidebar:                    #1E1610;
+  --sidebar-foreground:         #F2EDE8;
+  --sidebar-primary:            #C96A5A;
+  --sidebar-primary-foreground: #160F0B;
+  --sidebar-accent:             #2D1F18;
+  --sidebar-accent-foreground:  #F2EDE8;
+  --sidebar-border:             rgba(255, 255, 255, 0.07);
+  --sidebar-ring:               #C96A5A;
 }
 
 @layer base {
@@ -137,6 +164,22 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
     font-feature-settings: "cv11", "ss01";
   }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Playfair Display", ui-serif, Georgia, serif;
+    font-weight: 300;
+    letter-spacing: -0.03em;
+  }
+}
+
+/* Active sidebar nav item — Lyzr mahogany fill */
+[data-sidebar="menu-button"][data-active="true"] {
+  background-color: #6B4C4C;
+  color: #F9F5F1;
+}
+.dark [data-sidebar="menu-button"][data-active="true"] {
+  background-color: #C96A5A;
+  color: #160F0B;
 }

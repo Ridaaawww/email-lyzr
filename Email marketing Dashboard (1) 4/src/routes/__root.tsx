@@ -119,7 +119,10 @@ function RootComponent() {
           <div className="flex min-h-screen w-full bg-background">
             <AppSidebar />
             <div className="flex flex-1 flex-col">
-              <header className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b bg-background/80 px-4 backdrop-blur">
+              <header
+                className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b px-4 backdrop-blur"
+                style={{ backgroundColor: "rgba(242,237,232,0.85)" }}
+              >
                 <SidebarTrigger />
                 <div className="relative ml-2 hidden max-w-xs flex-1 lg:block">
                   <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
@@ -151,7 +154,10 @@ function RootComponent() {
                   </div>
                 </div>
               </header>
-              <div className="sticky top-14 z-20 flex flex-wrap items-center gap-2 border-b bg-background/80 px-4 py-2 backdrop-blur">
+              <div
+                className="sticky top-14 z-20 flex flex-wrap items-center gap-2 border-b px-4 py-2 backdrop-blur"
+                style={{ backgroundColor: "rgba(235,229,220,0.85)" }}
+              >
                 <GlobalFilters />
               </div>
               <main className="flex-1 p-6">
